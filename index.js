@@ -11,7 +11,7 @@ var modeller = {
    * Initialization function initializes our instance of Knex to work with
    * whatever database we need it to.
    */
-  init: function(config) {
+  connect: function(config) {
     var self = this;
 
     if (config.knex) {
@@ -28,7 +28,7 @@ var modeller = {
         port = config.port || 3306;
 
       if (!user || !password || !database || !dialect) {
-        throw new Error('knex-modeller.init() requires a configuration ' +
+        throw new Error('knex-modeller.connect() requires a configuration ' +
             'object which specifies user, password, database, and dialect.');
       } else {
         localKnex = require('knex')({
