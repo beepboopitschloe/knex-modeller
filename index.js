@@ -35,7 +35,7 @@ var modeller = {
           dialect: dialect,
 
           connection: {
-            username: username,
+            user: user,
             password: password,
             database: database,
             host: host,
@@ -47,7 +47,7 @@ var modeller = {
       /*
         After knex is instantiated, use it to create the Model class
        */
-      self.Model = require('./model.js')(localKnex);
+      self.Model = require('./lib/model.js')(localKnex);
     }
   },
 
