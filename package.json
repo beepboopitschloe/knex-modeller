@@ -1,0 +1,22 @@
+{
+  "name": "knex-modeller",
+  "version": "0.0.1",
+  "description": "A modelling system to be used in conjunction with the Knex SQL query builder.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@ssh.noahmuth.com:npm/knex-modeller.git"
+  },
+  "author": "Noah Muth <noahmuth@gmail.com> (http://github.com/nmuth)",
+  "license": "MIT",
+  "dependencies": {
+    "check-types": "3.1.x",
+    "lodash": "3.6.x"
+  },
+  "peerDependencies": {
+    "knex": "0.7.x"
+  }
+}
