@@ -19,17 +19,17 @@ var modeller = {
       // we assume it has been configured elsewhere
       localKnex = config.knex;
     } else {
-      // make sure that we have username, password, host, and db
-      var username = config.username,
+      // make sure that we have user, password, host, and db
+      var user = config.user,
         password = config.password,
         database = config.database,
         dialect = config.dialect,
         host = config.host || '127.0.0.1',
         port = config.port || 3306;
 
-      if (!username || !password || !database || !dialect) {
+      if (!user || !password || !database || !dialect) {
         throw new Error('knex-modeller.init() requires a configuration ' +
-            'object which specifies username, password, database, and dialect.');
+            'object which specifies user, password, database, and dialect.');
       } else {
         localKnex = require('knex')({
           dialect: dialect,
