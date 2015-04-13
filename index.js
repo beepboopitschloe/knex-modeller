@@ -57,6 +57,14 @@ var modeller = {
    */
   getKnex: function() {
     return localKnex;
+  },
+
+  /**
+   * Temp Model method will be overridden when knex is connected. If the client
+   * tries to call 'new Model()' before connection, we should throw an error.
+   */
+  Model: function() {
+    throw new Error('Need to run modeller.connect() before creating a model');
   }
 }
 
