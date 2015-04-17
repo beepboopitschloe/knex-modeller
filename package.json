@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@ssh.noahmuth.com:npm/knex-modeller.git"
+    "url": "git@github.com:nmuth/knex-modeller.git"
   },
   "author": "Noah Muth <noahmuth@gmail.com> (http://github.com/nmuth)",
   "license": "MIT",
