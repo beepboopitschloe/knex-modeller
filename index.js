@@ -40,6 +40,12 @@ var modeller = {
             database: database,
             host: host,
             port: port
+          },
+
+          // @TODO make this a config option
+          pool: {
+            min: 1,
+            max: 10
           }
         });
       }
