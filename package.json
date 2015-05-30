@@ -18,7 +18,7 @@
     "q": "^1.2.0"
   },
   "peerDependencies": {
-    "knex": "0.7.x"
+    "knex": "0.8.x"
   },
   "devDependencies": {
     "mocha": "^2.2.4"
