@@ -19,13 +19,13 @@ describe('the library object', function() {
     mockery.warnOnReplace(false);
   });
 
-  it('should initialize with a connect() function', function() {
+  it('initializes with a connect() function', function() {
     var lib = require('../index.js');
 
     expect(typeof lib.connect).to.equal('function');
   });
 
-  it('should require a database configuration to connect', function() {
+  it('requires a database configuration to connect', function() {
     var lib = require('../index.js'),
       caughtError;
 
@@ -44,7 +44,7 @@ describe('the library object', function() {
     }
   });
 
-  it('should connect to localhost by default', function() {
+  it('connects to localhost by default', function() {
     var lib = require('../index.js'),
       host = null;
 
@@ -64,7 +64,7 @@ describe('the library object', function() {
     mockery.deregisterMock('knex');
   });
 
-  it('should connect to to port 3306 by default', function() {
+  it('connects to to port 3306 by default', function() {
     var lib = require('../index.js'),
       port = null;
 
@@ -84,7 +84,7 @@ describe('the library object', function() {
     mockery.deregisterMock('knex');
   });
 
-  it('should connect with the \'knex\' package by default', function() {
+  it('connects with the \'knex\' package by default', function() {
     var lib = require('../index.js'),
       loadedKnex = false;
 
@@ -102,7 +102,7 @@ describe('the library object', function() {
     expect(loadedKnex).to.equal(true);
   });
 
-  it('should take in an optional pre-configured knex object', function() {
+  it('takes in an optional pre-configured knex object', function() {
     var lib = require('../index.js'),
       customKnex = 'custom';
 
@@ -124,7 +124,7 @@ describe('the library object', function() {
     mockery.deregisterMock('./lib/model.js');
   });
 
-  it('should not export Model() before connecting', function() {
+  it('will not export Model() before connecting', function() {
     var lib = require('../index.js'),
       caughtError;
 
