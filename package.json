@@ -1,6 +1,6 @@
 {
   "name": "knex-modeller",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A modelling system to be used in conjunction with the Knex SQL query builder.",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,6 @@
     "knex": "^0.8.6",
     "mock-knex": "^0.2.1",
     "mockery": "^1.4.0",
-		"semver": "^4.3.5"
+    "semver": "^4.3.5"
   }
 }
