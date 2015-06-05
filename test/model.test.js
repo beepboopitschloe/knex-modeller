@@ -3,62 +3,11 @@
  */
 
 var expect = require('chai').should(),
-  mockery = require('mockery'),
-  knex = require('knex'),
-  mockKnex = require('mock-knex');
-
-var db = knex({
-  client: 'mysql'
-});
-
-var tracker = mockKnex.getTracker();
-
-/**
- * Require lib/model.js with mockKnex
- *
- * in a function to save typing
- */
-function getGen() {
-  return require('../lib/model.js')(db);
-}
-
-/**
- * Get a TestModel class.
- */
-function getTestModelClass(defs) {
-  var Model = getGen();
-
-  return new Model('TestModel', defs || {});
-}
-
-function setup() {
-  mockKnex.setAdapter('knex@0.8');
-  mockKnex.mock(db);
-
-  tracker.install();
-
-  mockery.enable();
-
-  mockery.registerAllowables([
-    '../lib/model.js',
-    'knex',
-    'check-types',
-    'lodash',
-    'q'
-  ]);
-}
-
-function teardown() {
-  mockKnex.unmock(db);
-  tracker.uninstall();
-
-  mockery.deregisterAll();
-  mockery.disable();
-}
+  env = require('./env');
 
 describe('the Model generator', function() {
-  before(setup);
-  after(teardown);
+  before(env.setup);
+  after(env.teardown);
 
   it('is a function', function() {
     // require but don't call
@@ -69,21 +18,23 @@ describe('the Model generator', function() {
 
   it('returns a Model constructor', function() {
     // require and call
-    var Model = getGen();
+    var Model = env.getGenerator();
 
     Model.should.be.a('function');
 
     var model = new Model('table', {});
+
+    model.should.be.a('function');
   });
 });
 
 describe('the Model class', function() {
-  before(setup);
-  after(teardown);
+  before(env.setup);
+  after(env.teardown);
 
   describe('constructor', function() {
     it('throws an error without a table name and configuration object', function() {
-      var Model = getGen();
+      var Model = env.getGenerator();
 
       // call with no args
       Model.bind(null).should.throw(TypeError);
@@ -107,19 +58,19 @@ describe('the Model class', function() {
 
   describe('.isValid()', function() {
     it('is a static method', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.isValid.should.be.a('function');
     });
 
     it('returns false with no arguments', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.isValid().should.equal(false);
     });
 
     it('returns true if the object fits the model', function() {
-      var TestModel = getTestModelClass({
+      var TestModel = env.getTestModelClass({
         name: {
           type: 'string'
         }
@@ -133,7 +84,7 @@ describe('the Model class', function() {
     });
 
     it('returns false if the object does not fit the model', function() {
-      var TestModel = getTestModelClass({
+      var TestModel = env.getTestModelClass({
         name: {
           type: 'string'
         }
@@ -152,19 +103,19 @@ describe('the Model class', function() {
 
   describe('.get()', function() {
     it('is a static method', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.get.should.be.a('function');
     });
 
     it('requires no arguments by default', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.get.should.not.throw();
     });
 
     it('requires any arguments to be objects', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.get.bind(null, 'string').should.throw(TypeError);
       TestModel.get.bind(null, {}).should.not.throw();
@@ -173,9 +124,9 @@ describe('the Model class', function() {
     });
 
     it('produces a `select` query', function(done) {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
-      tracker.once('query', function(query) {
+      env.tracker.once('query', function(query) {
         query.method.should.equal('select');
 
         done();
@@ -187,28 +138,28 @@ describe('the Model class', function() {
 
   describe('.getOne()', function() {
     it('is a static method', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.getOne.should.be.a('function');
     });
 
     it('requires no arguments by default', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.getOne.should.not.throw();
     });
 
     it('requires any argument to be an object', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.getOne.bind(null, 'string').should.throw(TypeError);
       TestModel.getOne.bind(null, {}).should.not.throw();
     });
 
     it('produces a `select` query', function(done) {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
-      tracker.once('query', function(query) {
+      env.tracker.once('query', function(query) {
         query.method.should.equal('select');
 
         done();
@@ -220,22 +171,22 @@ describe('the Model class', function() {
 
   describe('.deleteWhere()', function() {
     it('is a static method', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.deleteWhere.should.be.a('function');
     });
 
     it('throws an error if its first argument is not an object', function() {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
       TestModel.deleteWhere.should.throw(TypeError);
       TestModel.deleteWhere.bind(null, 'string').should.throw(TypeError);
     });
 
     it('produces a `delete` query', function(done) {
-      var TestModel = getTestModelClass();
+      var TestModel = env.getTestModelClass();
 
-      tracker.once('query', function(query) {
+      env.tracker.once('query', function(query) {
         query.method.should.equal('del');
 
         done();
