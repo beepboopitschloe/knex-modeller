@@ -1,6 +1,6 @@
 {
   "name": "knex-modeller",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A modelling system to be used in conjunction with the Knex SQL query builder.",
   "main": "index.js",
   "scripts": {
