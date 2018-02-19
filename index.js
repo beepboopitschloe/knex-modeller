@@ -27,9 +27,9 @@ var modeller = {
         host = config.host || '127.0.0.1',
         port = config.port || 3306;
 
-      if (!user || !password || !database || !dialect) {
+      if (!user || !database || !dialect) {
         throw new Error('knex-modeller.connect() requires a configuration ' +
-            'object which specifies user, password, database, and dialect.');
+            'object which specifies user, database, and dialect.');
       } else {
         localKnex = require('knex')({
           dialect: dialect,
